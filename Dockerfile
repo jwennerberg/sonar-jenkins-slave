@@ -1,4 +1,4 @@
-FROM openshift/jenkins-slave-base-rhel7
+FROM rhel7/rhel
 
 MAINTAINER Johan Wennerberg <jwennerb@redhat.com>
 
@@ -6,7 +6,7 @@ ENV SONAR_SCANNER_URL=https://sonarsource.bintray.com/Distribution/sonar-scanner
     HOME=/var/lib/jenkins
 
 RUN yum-config-manager --disable epel >/dev/null || : && \
-    INSTALL_PKGS="java-1.8.0-openjdk" && \
+    INSTALL_PKGS="atomic-openshift-clients bc gettext git java-1.8.0-openjdk-headless lsof nss_wrapper rsync tar unzip which zip" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
