@@ -5,7 +5,9 @@ MAINTAINER Johan Wennerberg <jwennerb@redhat.com>
 ENV SONAR_SCANNER_URL=https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-2.8.zip \
     HOME=/var/lib/jenkins
 
-RUN yum-config-manager --disable epel >/dev/null || : && \
+RUN yum-config-manager --disable epel --disable rhel* >/dev/null || : && \
+    yum-config-manager --enable rhel-7-server-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-3.3-rpms && \
     INSTALL_PKGS="atomic-openshift-clients bc gettext git java-1.8.0-openjdk-headless lsof nss_wrapper rsync tar unzip which zip" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
